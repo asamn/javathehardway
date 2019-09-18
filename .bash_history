@@ -1,0 +1,215 @@
+dgdgdffdgddfgd
+bash <(curl -s https://migration.c9.io/migrate-cs50.sh) "https://awscloud9v3downloadinfra-exportedworkspacesbucket-1ef2i5e25sllk.s3.us-east-2.amazonaws.com/exports/2246507/6376264/ide50-6376264.20190612T190616033Z.home.tar.gz?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIASANISPZTTAWNTZB6%2F20190912%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20190912T135544Z&X-Amz-Expires=1800&X-Amz-Security-Token=AgoJb3JpZ2luX2VjEC4aCXVzLWVhc3QtMiJHMEUCIQDRtO8si0jGXlC1AGud3yyv%2F45P5bkIRmb2Qg%2F7hZBBWwIge0xwVTM9kCPYT9UzIwE5dti9QODJIIt7OnI8JBj7UugqxAII5%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARABGgwxMzgzMjkzNTc5MjciDBmdJm011aVIiBYYSCqYAtASVW0peEsISB9zzZQlmW8tVo7aNDpgdQ7I3AL14qmJL2VGIKBNdE7K%2BCVOJAsfMi0KB3apqdD2VNf8NPYcTOyBTYE%2B8CNRu1g0iWykcqECgUsLynPccoZ2BFWq1oswkCiCFGznCsUa2Ouh8ww%2Fj%2By3lL8IfjekZPik1WrOEn5cBJJhxlW012hISDguc2BGXsWzaSNcTC68z7jGNtvz1kBMGBHfKBIoiObisN8AXz9E8brRxZ9Uer6JrGYfrLn01mryM%2BIGKYSUK2vQRQjIcq1k49bfxz4Stt3acO2R%2Be1zd2F20y5vxnINZ6eBGUXbIls6XPfoOtfWggG8pKN0oZMyMwPe2J8yPcxgfPm7kky2ID3TfVke42Iw9cPn6wU6tAHKidHyaFQrhPimwO7zqs5amzZwKj7qaJfVy1RPZYCkauOQEXSZq%2BfOrBP4bTNNKEarZ61%2FyyvzyH%2BZQ0Py0b7XGNEPKXwEFqnKTxXrWaB4mFNkRySIYXLToZX99hyQXXO9zoFBx24%2ByZyHlSFyIziz5v7NXh%2BvOdtGOT09sGWSNL2BLVZhqRw1EGSGEtks%2Bcidr1tkF0ZRL0Vv%2BHmyjC4RGW2aDTQZWla863sJIGbw47WyMDo%3D&X-Amz-Signature=8daad7db42c63733436a4d0b840d5c9f3abcc09326215e5e1faa45123ef36319&X-Amz-SignedHeaders=host" "4xGqfGQ75Zpzk+1zes4FCvAxUiJAo+258DIhP9IgsoOSsH0GzK9EIWnEV3orRpXw" 23 && cd $HOME/environment
+cd ..
+mkdir CHAPTER 1
+mkdir CHAPTER 2
+cd chapter 1
+cd chapter1
+cd CHAPTER1
+touch FirstProg.java
+javac FirstProg.java
+javac FirstProg
+javac FirstProg
+javac FirstProg.java
+java FirstProg
+style50 FirstProg.java
+touch print.java
+javac print.java
+javac print.java
+javac print.java
+javac print.java
+javac print.java
+java print
+javac print.java
+touch print.java
+java print
+touch sequence.java
+javac sequence.java
+javac sequence.java
+javac sequence.java
+java sequence
+java sequence
+java sequence
+javac sequence.java
+java sequence
+java sequence
+java sequence
+javac sequence.java
+javac sequence.java
+java sequence
+javac sequence.java
+javac sequence.java
+java sequence
+javac sequence.java
+java sequence
+javac sequence.java
+java sequence
+javac sequence.java
+javac sequence.java
+java sequence
+javac sequence.java
+java sequence
+javac sequence.java
+java sequence
+javac sequence.java
+java sequence
+javac sequence.java
+java sequence
+javac sequence.java
+java sequence
+javac sequence.java
+java sequence
+javac sequence.java
+java sequence
+touch variables.java
+javac variables.java
+javac variables.java
+javac variables.java
+javac variables.java
+java variables
+javac variables.java
+javac variables.java
+java variables
+javac variables.java
+java variables
+cd CHAPTER1
+java variables
+javac variables.java
+java variables
+javac variables.java
+javac variables.java
+javac variables.java
+java variables
+javac variables.java
+java variables
+javac variables.java
+java variables
+cd CHAPTER1
+javac mathOperations
+javac mathOperations.java
+javac mathOperations.java
+javac mathOperations.java
+javac mathOperations.java
+java mathOperations
+javac mathOperations.java
+java mathOperations
+javac mathOperations.java
+java mathOperations
+javac mathOperations.java
+java mathOperations
+javac mathOperations.java
+java mathOperations
+javac mathOperations.java
+java mathOperations
+javac mathOperations.java
+java mathOperations
+javac mathOperations.java
+java mathOperations
+javac mathOperations.java
+java mathOperations
+javac mathOperations.java
+java mathOperations
+javac mathOperations.java
+javac mathOperations.java
+javac mathOperations.java
+javac mathOperations.java
+javac mathOperations.java
+java mathOperations
+touch PrintingChoices.java
+javac PrintingChoices.java
+javac PrintingChoices.java
+javac PrintingChoices.java
+java PrintingChoices
+javac PrintingChoices.java
+java PrintingChoices
+javac PrintingChoices.java
+java PrintingChoices
+javac PrintingChoices.java
+java PrintingChoices
+touch PrintingChoicesEscapes.java
+javac PrintingChoicesEscapes.java
+javac PrintingChoicesEscapes.java
+java PrintingChoicesEscapes
+java sequence
+javac sequence.c
+javac sequence.java
+javac sequence.java
+java sequence
+javac sequence.java
+java sequence
+javac sequence.java
+java sequence
+javac sequence.java
+java sequence
+javac sequence.java
+java sequence
+javac sequence.java
+javac sequence.java
+java sequence
+javac sequence.java
+java sequence
+javac sequence.java
+java sequence
+javac sequence.java
+java sequence
+java variables
+java mathOperations
+touch forgetfulMachine
+javac forgetfulMachine.java
+javac forgetfulMachine.java
+javac forgetfulMachine.java
+javac forgetfulMachine.java
+java forgetfulMachine
+touch rudeQuestions.java
+javac rudeQuestions.java
+javac rudeQuestions.java
+javac rudeQuestions.java
+javac rudeQuestions.java
+java rudeQuestions
+javac rudeQuestions.java
+java rudeQuestions
+javac rudeQuestions.java
+java rudeQuestions
+javac rudeQuestions.java
+java rudeQuestions
+java rudeQuestions
+javac rudeQuestions.java
+cd CHAPTER1
+git init
+git add .
+git add .
+git commit -m "initial commit"
+git init
+git add .
+git commit -m "initial commit"
+git init
+git add .
+git commit -m "initial commit"
+git init
+git add .
+git commit -m "initial commit"
+git init
+git add .
+git commit -m "initial commit"
+git init
+git add .
+git commit -m "initial commit"
+git init
+git add .
+git commit -m "initial commit"
+git init
+git add .
+git commit -m "initial commit"
+git remote add origin https://github.com/asamn/javathehardway.git
+git push -u origin master\
+git push -u origin master
+echo "# javathehardway" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/asamn/javathehardway.git
+git remote show origin
+git push -u origin master
+git remote add origin https://github.com/asamn/javathehardway.git
+git push -u origin master
+git init
