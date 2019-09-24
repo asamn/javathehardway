@@ -509,3 +509,12 @@ cd CHAPTER1
 cd CHAPTER1
 javac AgeMessages.java
 cd ..
+git add .
+git commit -m .
+git push origin master
+git pull https://github.com/asamn/javathehardway master
+git push origin master
+javac AgeMessages.java
+cd CHAPTER1
+javac AgeMessages.java
+cd ..
