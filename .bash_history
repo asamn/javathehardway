@@ -471,3 +471,33 @@ git add .
 git commit -m .
 git push origin master
 cd ..
+git add .
+git commit -m .
+git push origin master
+git pull .
+git push origin master
+git push origin master
+git commit -m .
+git push origin master
+git push origin master
+git push upstream upstreammaster:master
+git push origin master
+git pull https://github.com/asamn/javathehardway master
+git push -u origin master
+javac AgeMessages.java
+cd CHAPTER1
+javac AgeMessages.java
+java AgeMessages
+git push -u origin master
+git pull https://github.com/asamn/javathehardway master
+git push -u origin master
+git add .
+git commit -m .
+git push -u origin master
+git push  origin master
+git pull https://github.com/asamn/javathehardway master
+git push -u origin master
+cd ..
+git push -u origin master
+git pull https://github.com/asamn/javathehardway master
+git push -u origin master
