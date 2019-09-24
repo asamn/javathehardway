@@ -501,3 +501,11 @@ cd ..
 git push -u origin master
 git pull https://github.com/asamn/javathehardway master
 git push -u origin master
+git add .
+git commit -m .
+git push origin master
+javac AgeMessages.java
+cd CHAPTER1
+cd CHAPTER1
+javac AgeMessages.java
+cd ..
