@@ -435,3 +435,39 @@ javac AgeMessages.java
 java AgeMessages
 git add .
 git commit -m
+git add .
+git commit -m .
+git push origin master
+git commit -m AgeMessages
+git commit -m AgeMessages.java
+cd CHAPTER1
+javac AgeMessages.java
+git commit -m AgeMessages.java
+git commit -m AgeMessages
+javac AgeMessages.java
+git commit -m AgeMessages
+git commit -m AgeMessages.java
+java AgeMessages
+java ShallowGrandmother
+java AgeMessages
+java AgeMessages
+java AgeMessages
+java AgeMessages
+javac AgeMessages.java
+java AgeMessages
+java AgeMessages
+javac AgeMessages
+javac AgeMessage
+javac AgeMessages.java
+java AgeMessages
+java AgeMessages
+java ShallowGrandmother
+javac ShallowGrandmother
+javac ShallowGrandmother.java
+javac ShallowGrandmother.java
+java ShallowGrandmother
+git add.
+git add .
+git commit -m .
+git push origin master
+cd ..

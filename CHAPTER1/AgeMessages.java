@@ -13,16 +13,15 @@ public class AgeMessages
         System.out.print("Enter your height in inches: ");
         height = input.nextDouble();
 
-        if ( height < 60 && age > 5)//too short for life
+        if ( height < 60 && age > 5 && age < 120)//too short for life
         {
             age = 5;
+            System.out.println("You're short? That must mean you're like five. ");
         }
         else if ( height <= 0 )
         {
             age = 0;
         }
-
-        System.out.println(age);
 
         System.out.println("You should be: ");
         if ( age <= 0 || age > 120)
