@@ -22,7 +22,12 @@ git push origin master
 First use
 
 git pull https://github.com/asamn/javathehardway master
+
 and then try
 
 git push -u origin master
+
+or
+
+git push origin master
 */
