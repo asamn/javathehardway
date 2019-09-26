@@ -14,10 +14,10 @@ public class ClubBouncer
         System.out.print("Enter your age: ");
         age = input.nextInt();
 
-        System.out.print("Enter your \"allure\": ")
+        System.out.print("Enter your \"allure\": ");
         allure = input.nextDouble();
 
-        System.out.print("Are you a male, or a female? Sorry I can't see correctly: ")
+        System.out.print("Are you a male, or a female? Sorry I can't see correctly: ");
         genderInput = input.next();
         if (genderInput.equals("M") || genderInput.equals("m")  || genderInput.equals("male")  || genderInput.equals("Male") || genderInput.equals("MALE"))
         {
@@ -26,6 +26,7 @@ public class ClubBouncer
         else if (genderInput.equals("F") || genderInput.equals("f") || genderInput.equals("female") || genderInput.equals("Female") || genderInput.equals("FEMALE"))
         {
             isMale = false;
+            allure += 0.5;
         }
         else
         {
@@ -39,35 +40,36 @@ public class ClubBouncer
         if (name.equals("asamn") && isMale)
         {
             allowed = true;
+            allure = 100000.0;
         }
         else
         {
-            if ( age < 18 )
+
+            if (!isMale && (age >= 21 && allure >= 7.5))
             {
-                System.out.println("FBI, OPEN UP!!! ");
-                allowed = false;
+                allowed = true;
+                System.out.println("\nWelcome, maam. ");
+            }
+            else if (isMale && (age >= 21 && allure >= 10.0))
+            {
+                allowed = true;
+                System.out.println("Welcome, sir. ");
             }
             else
             {
-                if (!isMale && (age >= 21 || allure >= 7.5))
-                {
-                    allowed = true;
-                }
-                else if (isMale && (age >= 21 || allure >= 10.0))
-                {
-                    allowed = true;
-                }
-                else
-                {
-                    allowed = false;
-                }
+                allowed = false;
+                System.out.println("You're not allowed in. ");
             }
 
-
         }
-
-
-
+        if (allowed)
+        {
+           System.out.println("You're allowed in. ");
+        }
+        else
+        {
+            System.out.println("Go away. ");
+        }
 
 
 

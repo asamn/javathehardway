@@ -545,3 +545,29 @@ java SpaceBoxing
 java SpaceBoxing
 java SpaceBoxing
 cd ..
+git add .
+git commit -m "SpaceBoxing.java"
+git push origin master
+git pull https://github.com/asamn/javathehardway master
+git push -u origin master
+cd CHAPTER1
+javac ClubBouncer.java
+javac ClubBouncer.java
+javac ClubBouncer.java
+java ClubBouncer
+javac ClubBouncer.java
+java ClubBouncer
+javac ClubBouncer.java
+java ClubBouncer
+java ClubBouncer
+java ClubBouncer
+javac ClubBouncer.java
+javac ClubBouncer.java
+java ClubBouncer
+javac ClubBouncer.java
+java ClubBouncer
+java ClubBouncer
+java ClubBouncer
+java ClubBouncer
+java ClubBouncer
+cd ..

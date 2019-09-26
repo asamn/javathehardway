@@ -68,7 +68,7 @@ public class SpaceBoxing
 
         System.out.print("Your weight would be " + weight + " pounds on " + planetName);
 
-        if (planet == 5)
+        if (planet == 5) //uranus
         {
             System.out.print("..");
         }
