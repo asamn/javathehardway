@@ -532,3 +532,16 @@ git push origin master
 git pull https://github.com/asamn/javathehardway master
 git push -u origin master
 cd ..
+git add .
+git commit -m "SpaceBoxing.java"
+git push
+git pull https://github.com/asamn/javathehardway master
+git push -u origin master
+javac SpaceBoxing.java
+cd CHAPTER1
+javac SpaceBoxing.java
+java SpaceBoxing
+java SpaceBoxing
+java SpaceBoxing
+java SpaceBoxing
+cd ..

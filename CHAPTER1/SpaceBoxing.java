@@ -66,8 +66,12 @@ public class SpaceBoxing
         }
         weight *= multiplier;
 
-        System.out.println("Your weight would be " + weight + " pounds on " + planetName);
+        System.out.print("Your weight would be " + weight + " pounds on " + planetName);
 
+        if (planet == 5)
+        {
+            System.out.print("..");
+        }
 
 
     }
