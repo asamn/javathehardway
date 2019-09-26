@@ -32,3 +32,14 @@ or
 git push origin master
 */
 
+/*
+Manually uploading/updating files to github.
+
+In your terminal run the following commands one line at a time:
+
+git add .
+git commit -m "message" (This is a short message on what you are uploading)
+git push
+
+If no error messages, then all went well!
+*/
