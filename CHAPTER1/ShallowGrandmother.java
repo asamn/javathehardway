@@ -30,7 +30,7 @@ public class ShallowGrandmother
        allowed = (  (isMale && age >= 20 && age <= 40 && (income >= 60000 || hot >= 8.01))   ||   (!isMale && age >= 18 && age <= 35 && income >= 25000 && hot >= 10.00 )   ||  (name.equals("asamn")   ));
 
 
-       System.out.println("Allowed: " + allowed);
+       System.out.println("Allowed to date granddaughter: " + allowed);
 
 
 

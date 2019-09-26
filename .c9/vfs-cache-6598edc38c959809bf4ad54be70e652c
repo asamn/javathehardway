@@ -4890,6 +4890,7 @@ var inherits = require('util').inherits;
 var smith = require('@c9/smith');
 var Agent = smith.Agent;
 var Stream = require('stream').Stream;
+var ApiHandler = require('./api-handler').ApiHandler;
 
 exports.smith = smith;
 exports.Worker = Worker;
@@ -4970,9 +4971,14 @@ function Worker(vfs) {
     var streams = {};
     var watchers = {};
     var processes = {};
-    var apis = {};
     var handlers = {};
     var remote = this.remoteApi;
+    var apiHandler = new ApiHandler({
+        name: "worker",
+        processCallback: processCallback,
+        onBeforeStoredApiCall: wrapPingCall,
+        remote: remote,
+    });
 
     function subscribe(name, callback) {
         handlers[name] = function (value) {
@@ -5178,13 +5184,6 @@ function Worker(vfs) {
         return token;
     }
 
-    function storeApi(api) {
-        var name = api.name;
-        apis[name] = api;
-        var token = { name: name, names: api.names };
-        return token;
-    }
-
     // Remote side writing to our local writable streams
     function write(id, chunk) {
         // They want to write to our real stream
@@ -5272,28 +5271,7 @@ function Worker(vfs) {
     }
 
     function call(name, fnName, args) {
-        var api = apis[name];
-        if (!api) return;
-
-        wrapPingCall(name, fnName, args);
-
-        // If the last arg is a function, assume it's a callback and process it.
-        if (typeof args[args.length - 1] == "function") {
-            var callback = args[args.length - 1];
-            args[args.length - 1] = function (err, meta) {
-                if (err || (meta && typeof meta === "object")) {
-                    return processCallback(err, meta, callback);
-                }
-                callback(err, meta);
-            };
-        }
-
-        var fun = api[fnName];
-        if (!fun) { //Defensive code, triggered by http://tt.amazon.com/0147390393
-            console.error("vfs-socket/worker.call called with name " + name + " and fnName " + fnName + " but no function could be found.");
-            return;
-        }
-        fun.apply(api, args);
+        return apiHandler.callStoredApiFunction(name, fnName, args);
     }
 
     function onData(id, chunk) {
@@ -5346,7 +5324,7 @@ function Worker(vfs) {
                 case "process": token.process = storeProcess(meta.process); break;
                 case "pty": token.pty = storePty(meta.pty); break;
                 case "watcher": token.watcher = storeWatcher(meta.watcher); break;
-                case "api": token.api = storeApi(meta.api); break;
+                case "api": token.api = apiHandler.storeApi(meta.api); break;
                 default: token[key] = meta[key]; break;
             }
         }
@@ -5395,6 +5373,9 @@ function Worker(vfs) {
                 );
                 err.code = "EINVALIDOPTIONS";
                 return callback(err);
+            }
+            if (options.api) {
+                options.api = apiHandler.makeApiProxy(options.api);
             }
 
             vfs[name](path, options, function (err, meta) {
@@ -7392,6 +7373,93 @@ function EngineIoTransport(socket) {
         }
         return socket.send(message);
     };
+}
+
+});
+
+
+define('@c9/vfs-socket/api-handler', function (module, exports, require) {
+
+// ApiHandler encapsulates logic related to vfs.extend apis:
+// - stores local APIs and gives ability to call api methods.
+// - creates remote APIs proxies that can be provided to clients.
+// It's used by both vfs-worker and vfs-consumer.
+
+var assert = require("assert");
+var EventEmitter = require("events").EventEmitter
+
+exports.ApiHandler = ApiHandler;
+
+function ApiHandler(context) {
+    this.context = context;
+    this.apis = {};
+    this.proxyApis = {};
+}
+
+ApiHandler.prototype.storeApi = function(api) {
+    assert(typeof api.name === "string", "api should have 'name' property");
+    assert(Array.isArray(api.names), "api should have 'names' property");
+    this.apis[api.name] = api;
+    return {name: api.name, names: api.names};
+};
+
+ApiHandler.prototype.callStoredApiFunction = function(apiName, fnName, args) {
+    var api = this.apis[apiName];
+    if (!api) return;
+
+    var context = this.context;
+    if (context.onBeforeStoredApiCall) context.onBeforeStoredApiCall(apiName, fnName, args);
+
+    // If the last arg is a function, assume it's a callback and process it.
+    if (typeof args[args.length - 1] == "function") {
+        var callback = args[args.length - 1];
+        args[args.length - 1] = function (err, meta) {
+            if (err || (meta && typeof meta === "object")) {
+                return context.processCallback(err, meta, callback);
+            }
+            callback(err, meta);
+        };
+    }
+
+    var fun = api[fnName];
+
+    // Defensive code, triggered by http://tt.amazon.com/0147390393
+    if (!fun) {
+        console.error(
+            "vfs-socket/" + context.name + ".call called with apiName " + apiName
+                + " and fnName " + fnName + " but no function could be found."
+        );
+        return;
+    }
+
+    fun.apply(api, args);
+};
+
+ApiHandler.prototype.makeApiProxy = function(token) {
+    var context = this.context;
+    var name = token.name;
+    var api = this.proxyApis[name] = new EventEmitter();
+    api.name = token.name;
+    api.names = token.names;
+    token.names.forEach(function(functionName) {
+        api[functionName] = function() {
+            var args = Array.prototype.slice.call(arguments);
+            if (typeof args[args.length - 1] === "function") {
+                var callback = args[args.length - 1];
+                args[args.length - 1] = function (err, meta) {
+                    return context.processCallback(err, meta, callback);
+                };
+            }
+            context.remote.call(name, functionName, args);
+        };
+    });
+    return api;
+}
+
+ApiHandler.prototype.disconnect = function() {
+    Object.keys(this.proxyApis).forEach(function(name) {
+        delete this.proxyApis[name];
+    }.bind(this));
 }
 
 });
