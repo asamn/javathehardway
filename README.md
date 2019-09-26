@@ -7,7 +7,7 @@ cd .. (~/)
 
 git add .  
 
-git commit -m . //replace dot with file to commit one file
+git commit -m . 
 
 git push origin master
 
