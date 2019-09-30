@@ -1,44 +1,3 @@
-java PrintingChoicesEscapes
-java sequence
-javac sequence.c
-javac sequence.java
-javac sequence.java
-java sequence
-javac sequence.java
-java sequence
-javac sequence.java
-java sequence
-javac sequence.java
-java sequence
-javac sequence.java
-java sequence
-javac sequence.java
-javac sequence.java
-java sequence
-javac sequence.java
-java sequence
-javac sequence.java
-java sequence
-javac sequence.java
-java sequence
-java variables
-java mathOperations
-touch forgetfulMachine
-javac forgetfulMachine.java
-javac forgetfulMachine.java
-javac forgetfulMachine.java
-javac forgetfulMachine.java
-java forgetfulMachine
-touch rudeQuestions.java
-javac rudeQuestions.java
-javac rudeQuestions.java
-javac rudeQuestions.java
-javac rudeQuestions.java
-java rudeQuestions
-javac rudeQuestions.java
-java rudeQuestions
-javac rudeQuestions.java
-java rudeQuestions
 javac rudeQuestions.java
 java rudeQuestions
 java rudeQuestions
@@ -534,3 +493,46 @@ java BMICategories
 java BMICategories
 cd ..
 git add ,
+git add .
+git commit -m .
+git push -u origin master
+git pull https://github.com/asamn/javathehardway master
+git push -u origin master
+cd CHAPTER1
+touch LittleQuiz.java
+javac LitleQuiz.java
+javac LittleQuiz.java
+javac LittleQuiz.java
+java LittleQuiz
+java LittleQuiz
+java LittleQuiz
+javac LittleQuiz.java
+javac LittleQuiz.java
+javac LittleQuiz.java
+java LittleQuiz
+javac LittleQuiz.java
+java LittleQuiz
+javac LittleQuiz.java
+java LittleQuiz
+javac LittleQuiz.java
+java LittleQuiz
+javac LittleQuiz.java
+java LittleQuiz
+java LittleQuiz
+javac LittleQuiz.java
+java LittleQuiz
+javac LittleQuiz.java
+java LittleQuiz
+java LittleQuiz
+javac LittleQuiz.java
+java LittleQuiz
+git add .
+git commit -m .
+git commit -m .
+git add .
+git commit -m .
+git push origin master
+git pull https://github.com/asamn/javathehardway master
+cd ..
+git push origin master
+git pull https://github.com/asamn/javathehardway master
