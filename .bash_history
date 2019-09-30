@@ -536,3 +536,6 @@ git pull https://github.com/asamn/javathehardway master
 cd ..
 git push origin master
 git pull https://github.com/asamn/javathehardway master
+git add .
+git commit -m .
+git push origin master
