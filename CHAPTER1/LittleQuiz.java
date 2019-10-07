@@ -111,10 +111,6 @@ public class LittleQuiz
             score = 0;
         }
 
-
-
-
     }
-
 
 }
