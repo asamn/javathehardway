@@ -514,3 +514,10 @@ git commit -m .
 cd ..
 git pull https://github.com/asamn/javathehardway master
 git push -u origin master
+git add .
+git commit -m .
+git pull https://github.com/asamn/javathehardway master
+git push -u origin master
+cd CHAPTER1
+javac ThreeCardMonte.java
+cd ..

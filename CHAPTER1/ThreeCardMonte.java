@@ -38,7 +38,7 @@ public class ThreeCardMonte
             choice = input.nextInt();
             while (choice <= 0 || choice >= 4)
             {
-                System.out.println("Pick 1-3, dummy.");
+                System.out.println("Pick 1-3, dummy. Dummy thick.");
                 choice = input.nextInt();
             }
 
