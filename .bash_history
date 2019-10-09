@@ -1,131 +1,3 @@
-java SpaceBoxing
-javac SpaceBoxing.java
-javac SpaceBoxing.java
-java SpaceBoxing
-javac SpaceBoxing.java
-javac SpaceBoxing.java
-javac SpaceBoxing.java
-javac SpaceBoxing.java
-java SpaceBoxing
-javac SpaceBoxing.java
-javac SpaceBoxing.java
-javac SpaceBoxing.java
-java SpaceBoxing
-java SpaceBoxing
-java SpaceBoxing
-git add .
-git commit -m "SpaceBoxing.java"
-git push
-git push origin master
-git pull https://github.com/asamn/javathehardway master
-git push -u origin master
-cd ..
-git add .
-git commit -m "SpaceBoxing.java"
-git push
-git pull https://github.com/asamn/javathehardway master
-git push -u origin master
-javac SpaceBoxing.java
-cd CHAPTER1
-javac SpaceBoxing.java
-java SpaceBoxing
-java SpaceBoxing
-java SpaceBoxing
-java SpaceBoxing
-cd ..
-git add .
-git commit -m "SpaceBoxing.java"
-git push origin master
-git pull https://github.com/asamn/javathehardway master
-git push -u origin master
-cd CHAPTER1
-javac ClubBouncer.java
-javac ClubBouncer.java
-javac ClubBouncer.java
-java ClubBouncer
-javac ClubBouncer.java
-java ClubBouncer
-javac ClubBouncer.java
-java ClubBouncer
-java ClubBouncer
-java ClubBouncer
-javac ClubBouncer.java
-javac ClubBouncer.java
-java ClubBouncer
-javac ClubBouncer.java
-java ClubBouncer
-java ClubBouncer
-java ClubBouncer
-java ClubBouncer
-java ClubBouncer
-cd ..
-git add .
-git commit -m .
-git pull https://github.com/asamn/javathehardway master
-git push origin master
-cd CHAPTER1
-touch SecretWord.java
-javac SecretWord.java
-javac SecretWord.java
-java SecretWord
-javac SecretWord.java
-java SecretWord
-java SecretWord
-javac SecretWord.java
-java SecretWord
-javac SecretWord.java
-java SecretWord
-javac SecretWord.java
-java SecretWord
-java SecretWord
-java SecretWord
-javac SecretWord.java
-java SecretWord
-java SecretWord
-java SecretWord
-touch BMICategories.java
-cd CHAPTER1
-java BMICalculator
-java BMICalculator
-javac BMICategories.java
-javac BMICategories.java
-javac BMICategories.java
-java BMICategories
-javac BMICategories.java
-java BMICategories
-javac BMICategories.java
-java BMICategories
-javac BMICategories.java
-java BMICategories
-java BMICategories
-javac BMICategories.java
-java BMICategories
-java BMICategories
-java BMICategories
-java BMICategories
-java BMICategories
-java BMICategories
-java BMICategories
-java BMICategories
-java BMICategories
-java BMICategories
-java BMICategories
-java BMICategories
-java BMICategories
-java BMICategories35
-java BMICategories35
-java BMICategories
-java BMICategories
-java BMICategories
-java BMICategories
-cd ..
-git add ,
-git add .
-git commit -m .
-git push -u origin master
-git pull https://github.com/asamn/javathehardway master
-git push -u origin master
-cd CHAPTER1
 touch LittleQuiz.java
 javac LitleQuiz.java
 javac LittleQuiz.java
@@ -520,4 +392,115 @@ git pull https://github.com/asamn/javathehardway master
 git push -u origin master
 cd CHAPTER1
 javac ThreeCardMonte.java
+cd ..
+git add .
+git commit -m .
+git pull https://github.com/asamn/javathehardway master
+git push -u origin master
+cd CHAPTER1
+cd CHAPTER1
+touch EnterPIN.java
+javac EnterPIN.java
+javac EnterPIN.java
+java EnterPIN
+javac EnterPIN.java
+java EnterPIN
+java EnterPIN
+javac EnterPIN.java
+java EnterPIN
+java EnterPIN
+javac EnterPIN.java
+java EnterPIN
+javac EnterPIN.java
+java EnterPIN
+javac EnterPIN.java
+java EnterPIN
+javac EnterPIN.java
+java EnterPIN
+javac EnterPIN.java
+java EnterPIN
+javac EnterPIN.java
+java EnterPIN
+javac EnterPIN.java
+java EnterPIN
+java EnterPIN
+javac EnterPIN.java
+java EnterPIN
+javac EnterPIN.java
+java EnterPIN
+javac EnterPIN.java
+java EnterPIN
+javac EnterPIN.java
+java EnterPIN
+javac EnterPIN.java
+javac EnterPIN.java
+javac EnterPIN.java
+java EnterPIN
+java EnterPIN
+java EnterPIN
+java EnterPIN
+javac EnterPIN.java
+java EnterPIN
+java EnterPIN
+javac EnterPIN.java
+java EnterPIN
+javac EnterPIN.java
+java EnterPIN
+javac EnterPIN.java
+java EnterPIN
+java EnterPIN
+javac EnterPIN.java
+java EnterPIN
+java EnterPIN
+javac EnterPIN.java
+java EnterPIN
+java EnterPIN
+java EnterPIN
+java EnterPIN
+java EnterPIN
+java EnterPIN
+java EnterPIN
+java EnterPIN
+java EnterPIN
+touch HighLow.java
+javac HighLow.java
+javac HighLow.java
+javac HighLow.java
+java HighLow
+java HighLow
+javac HighLow.java
+java HighLow
+javac HighLow.java
+java HighLow
+javac HighLow.java
+java HighLow
+javac HighLow.java
+javac HighLow.java
+java HighLow
+javac HighLow.java
+java HighLow
+javac HighLow.java
+java HighLow
+java HighLow
+java HighLow
+java HighLow
+javac HighLow.java
+javac HighLow.java
+java HighLow
+javac HighLow.java
+java HighLow
+javac HighLow.java
+java HighLow
+javac HighLow.java
+java HighLow
+javac HighLow.java
+java HighLow
+java HighLow
+java HighLow
+java HighLow
+javac HighLow.java
+cd CHAPTER1
+javac HighLow.java
+java HighLow
+java HighLow
 cd ..
