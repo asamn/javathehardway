@@ -5313,12 +5313,14 @@ function Worker(vfs) {
             if (!meta)
                 return callback(nerr);
         }
-        var token = {};
+        var token = Array.isArray(meta) ? [] : {};
         var keys = Object.keys(meta || {});
         for (var i = 0, l = keys.length; i < l; i++) {
             var key = keys[i];
-            if (meta[key] == undefined)
+            if (meta[key] == undefined) {
+                token[key] = undefined;
                 continue;
+            }
             switch (key) {
                 case "stream": token.stream = storeStream(meta.stream); break;
                 case "process": token.process = storeProcess(meta.process); break;
@@ -6887,7 +6889,7 @@ Agent.prototype._storeFunction = function(fn) {
     }
 
     var callbacks = this.callbacks;
-    // Wrap is a self cleaning function and store in the index
+    // Wrap in a self cleaning function and store in the index
     callbacks[key] = function() {
         delete callbacks[key];
         return fn.apply(this, arguments);
