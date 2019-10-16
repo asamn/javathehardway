@@ -13,11 +13,12 @@ public class RunningTotal
             current = input.nextInt();
             total = total + current;
             System.out.println("Total so far: " + total);
-
         }
         while(current != 0);
         System.out.println("\nTotal: " + total);
 
+
     }
+
 
 }
