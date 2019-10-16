@@ -551,3 +551,7 @@ java PigDice
 javac PigDice.java
 java PigDice
 cd ..
+git add .
+git commit -m
+git commit -m .
+git push origin master

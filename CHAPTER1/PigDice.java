@@ -51,7 +51,6 @@ public class PigDice
             do
             {
                 roll = 1 + (int)(6 * Math.random());
-
                 if (roll == 1 )
                 {
                     out.print("\tYou rolled a " + roll + ". ");
