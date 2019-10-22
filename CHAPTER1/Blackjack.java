@@ -52,7 +52,7 @@ public class Blackjack
                 {
                     activatedItems[1] = 1;//always active
                 }
-                out.println("Currency: " + currency);
+                out.println("\nCurrency: " + currency);
                 out.print("Press 'B' to bet, press 'S' to enter shop, press 'I' to view your inventory. ");
                 answer = enterChoice(answer, input);
 
@@ -78,7 +78,12 @@ public class Blackjack
 
                 if (activatedItems[0] == 1 && draws >= 2) //if lucky card activated
                 {
-                    if (21 - total < 10) //if difference is less than ten 21-19 =
+                    if (total == 21)
+                    {
+                        card = 1;
+                        out.println("DUMMY!");
+                    }
+                    else if (21 - total < 10) //if difference is less than ten 21-19 =
                     {
                        card = 21 - total;
                     }
@@ -142,13 +147,12 @@ public class Blackjack
                         total = 0;
                         dealerTotal = 1;//if you bust, dealer doesnt have to draw
                     }
-                    else if (total == 21)
-                    {
-                        out.println("Blackjack!");// still chance for push
-                        stand = true;
-                    }
                     else
                     {
+                        if (total == 21)
+                        {
+                            out.println("Blackjack!");// still chance for push
+                        }
                         out.print("\nHit or stand? ");
                         if (draws == 2)//on first play only
                         {
