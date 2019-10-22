@@ -111,7 +111,6 @@ public class PigDice
 
                 if (turnTotal > aiHoldMinRange && turnTotal < aiHoldMaxRange)//if total is a high number, ai wouldnt want to lose a high number by rolling a one
                 {
-
                     aiChance = 1 + (int)(aiHoldChance * Math.random());
                     if (aiRiskMode = false)
                     {
