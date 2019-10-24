@@ -63,16 +63,23 @@ public class PigDice
                     out.println("\tYou rolled " + roll);
                     turnTotal = turnTotal + roll;
                     out.println("\tYour turn's total: " + turnTotal);
-
-                    out.print("Roll again? Y/N ");
-                    answer = input.next();
-                    if (answer.equalsIgnoreCase("no") || answer.equalsIgnoreCase("n"))
+                    if (turnTotal >= 20)//checks again
                     {
-                        turn = 1;
+                        //do nothing
                     }
                     else
                     {
-                        turn = 0;
+                        out.print("Roll again? Y/N ");
+                        answer = input.next();
+                        if (answer.equalsIgnoreCase("no") || answer.equalsIgnoreCase("n"))
+                        {
+                            turn = 1;
+                        }
+                        else
+                        {
+                            turn = 0;
+                        }
+
                     }
 
                 }
