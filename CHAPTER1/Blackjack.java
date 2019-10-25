@@ -47,7 +47,7 @@ public class Blackjack
                 //out.println(cardsInDeck[i]);
             }
             do
-                {
+            {
                 if (storeItems[1] == 1) //if have plat chip, items that are one purchase only
                 {
                     activatedItems[1] = 1;//always active
