@@ -63,7 +63,6 @@ public class Blackjack
                 if (answer.equalsIgnoreCase("i") || answer.equalsIgnoreCase("inventory"))
                 {
                     activatedItems = viewItems(storeItems, activatedItems, storeStrings, input);
-
                 }
             }
             while (!answer.equalsIgnoreCase("b") && !answer.equalsIgnoreCase("bet"));
@@ -72,8 +71,8 @@ public class Blackjack
 
             while (stand == false)
             {
+                //DRAW CARD
                 card = 1 + (int)(13 * Math.random()); //1-13, 13 card variations
-
 
                 if (activatedItems[0] == 1 && draws >= 2) //if lucky card activated
                 {
@@ -91,9 +90,7 @@ public class Blackjack
                         card = 10; //draws ten card
                     }
                     out.println("LUCKY JOKER CARD ACTIVATED!");
-
                 }
-
 
                 while (cardsInDeck[card - 1] == 0) //card minus one to match array, if there are no cards left, redraw!
                 {
@@ -207,7 +204,6 @@ public class Blackjack
                                 out.println("Blackjack!");
                             }
                             stand = true;
-
                         }
                         else
                         {
@@ -226,7 +222,6 @@ public class Blackjack
 
             while (dealerStand == false && total != 0) //!0 means not busted
             {
-
                 if (draws == 0)//on first turn
                 {
                     out.println("\n\nDealer's turn");
@@ -234,6 +229,7 @@ public class Blackjack
                     cardString = firstDealerCard;//sets to thos for the print function
                     printCard(cardString);
                 }
+                //DRAW CARD
                 card = 1 + (int)(13 * Math.random());
                 countDeckCards(card, cardsInDeck);//removes card from deck after drawing, check if cards are left before removing
 
@@ -537,8 +533,7 @@ public class Blackjack
             bet = input.nextInt();
         }
 
-    return bet;
-
+        return bet;
     }
 
 

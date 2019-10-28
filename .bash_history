@@ -508,3 +508,9 @@ git commit =m
 git commit =m .
 git add .
 git commit -m .
+git add .
+git commit -m .
+git push origin master
+cd CHAPTER1
+javac Blackjack.java
+cd ..
