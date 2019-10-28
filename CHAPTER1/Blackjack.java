@@ -32,7 +32,6 @@ public class Blackjack
             for (int i = 0; i < activatedItems.length; i++)
             {
                 activatedItems[i] = 0;
-
             }
             if (storeItems[1] == 1) //if have plat chip, items that are one purchase only
             {
@@ -210,10 +209,9 @@ public class Blackjack
                             stand = true;
                         }
                     }
-
                 }
-
             }
+
             draws = 0;
             stand = true;
             dealerStand = false;
