@@ -68,7 +68,6 @@ public class Blackjack
             }
             while (!answer.equalsIgnoreCase("b") && !answer.equalsIgnoreCase("bet"));
 
-
             bet = enterBet(bet,maxBet,currency, input);
 
             while (stand == false)
@@ -223,7 +222,6 @@ public class Blackjack
             stand = true;
             dealerStand = false;
 
-
             //dealers turn
 
             while (dealerStand == false && total != 0) //!0 means not busted
@@ -235,7 +233,6 @@ public class Blackjack
                     out.println("Dealers current cards: ");
                     cardString = firstDealerCard;//sets to thos for the print function
                     printCard(cardString);
-
                 }
                 card = 1 + (int)(13 * Math.random());
                 countDeckCards(card, cardsInDeck);//removes card from deck after drawing, check if cards are left before removing
@@ -425,7 +422,6 @@ public class Blackjack
             }
 
         return cardValue;//sets value of function
-
     }
 
 
@@ -493,7 +489,6 @@ public class Blackjack
             }
             //out.print("cards left of" + card + " ");
             //out.println(cardsInDeck[card - 1]); //minus one to match the array
-
     }
 
 
@@ -559,7 +554,6 @@ public class Blackjack
         }
 
         return answer;
-
     }
 
 
@@ -587,8 +581,6 @@ public class Blackjack
                 {
                     out.println("\t(" +  (i + 1) + ") " + storeCosts[i] + "C " + storeStrings[i] + "- " + storeDescriptions[i]);
                 }
-
-
             }
             out.println("Your current currency: " + currency);
             for (int i = 0; i < storeItems.length; i++)
@@ -609,7 +601,6 @@ public class Blackjack
                 storeChoice = input.nextInt();
                 storeChoice = storeChoice - 1;//to match array
             }
-
 
             if (storeChoice == -1)
             {
@@ -672,7 +663,6 @@ public class Blackjack
                     if (storeItems[i] > 0)
                     {
                         out.print("\n\t(" + (i + 1) + ") " + storeStrings[i]);
-
                         out.print(" x" + storeItems[i]);
                         itemCount++;
                     }
@@ -722,13 +712,7 @@ public class Blackjack
         }
         while (invChoice != -1);
 
-
-
-
         return activatedItems;
     }
-
-
-
 
 }

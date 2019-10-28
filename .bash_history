@@ -1,10 +1,3 @@
-java Blackjack
-java Blackjack
-javac Blackjack.java
-java Blackjack
-java Blackjack
-javac Blackjack.java
-java Blackjack
 javac Blackjack.java
 java Blackjack
 javac Blackjack.java
@@ -502,3 +495,14 @@ cd CHAPTER1
 java Blackjack
 java OverlyComplexFlag
 cd ..
+git add .
+git commit -m .
+git push origin master
+cd CHAPTER1
+cd ..
+cd CHAPTER1
+javac Blackjack.java
+cd ..
+git add .
+git commit =m
+git commit =m .
