@@ -506,3 +506,5 @@ cd ..
 git add .
 git commit =m
 git commit =m .
+git add .
+git commit -m .
