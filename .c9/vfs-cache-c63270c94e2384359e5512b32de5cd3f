@@ -10022,7 +10022,7 @@ module.exports = function setup(fsOptions) {
             err.code = "EEXIST";
             return callback(err, { api: apis[name] });
         }
-        
+
         if (options.redefine && apis[name] && apis[name].destroy)
             apis[name].destroy();
 

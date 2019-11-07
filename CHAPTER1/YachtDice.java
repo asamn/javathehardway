@@ -47,7 +47,7 @@ public class YachtDice
             System.out.println("The Yacht!!");
             System.out.println("Rolls: " + rolls);
             out.println("Tries: " + tries);
-            out.println("Average: " + averageRolls);
+            out.println("Average Rolls: " + averageRolls);
             answer = input.next();
             if(answer.equalsIgnoreCase("s"))
             {
