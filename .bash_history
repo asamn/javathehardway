@@ -1,85 +1,3 @@
-javac Blackjack.java
-java Blackjack
-java Blackjack
-git add .
-git commit -m .
-git push origin master
-git push origin master
-cd ..
-git add .
-git commit -m
-git commit -m .
-git push origin master
-cd CHAPTER1
-java Blackjack
-java Blackjack
-java Blackjack
-java Blackjack
-java Blackjack
-java Blackjack
-cd ..
-git add .
-cd CHAPTER1
-java Blackjack
-java Blackjack
-javac Blackjack.java
-java Blackjack
-java Blackjack
-java PigDice
-javac PigDice.javac
-javac PigDice.java
-java PigDice
-javac PigDice.java
-java PigDice
-java PigDice
-javac ThereAndBackAgain
-touch ThereAndBackAgain.java
-javac ThereAndBackAgain.java
-javac ThereAndBackAgain.java
-java ThereAndBackAgain
-touch OverlyComplexFlag.java
-javac Blackjack.java
-cd CHAPTER1
-javac OverlyComplexFlag.java
-javac OverlyComplexFlag.java
-javac OverlyComplexFlag.java
-javac OverlyComplexFlag.java
-javac OverlyComplexFlag.java
-java OverlyComplexFlag
-javac OverlyComplexFlag.java
-java OverlyComplexFlag
-javac OverlyComplexFlag.java
-java OverlyComplexFlag
-javac OverlyComplexFlag.java
-java OverlyComplexFlag
-javac OverlyComplexFlag.java
-java OverlyComplexFlag
-javac OverlyComplexFlag.java
-java OverlyComplexFlag
-javac OverlyComplexFlag.java
-java OverlyComplexFlag
-javac OverlyComplexFlag.java
-java OverlyComplexFlag
-javac OverlyComplexFlag.java
-java OverlyComplexFlag
-javac OverlyComplexFlag.java
-java OverlyComplexFlag
-javac OverlyComplexFlag
-javac OverlyComplexFlag.java
-javac OverlyComplexFlag
-javac OverlyComplexFlag.java
-java OverlyComplexFlag
-javac OverlyComplexFlag.java
-java OverlyComplexFlag
-javac OverlyComplexFlag.java
-javac OverlyComplexFlag.java
-java OverlyComplexFlag
-javac OverlyComplexFlag.java
-java OverlyComplexFlag
-javac OverlyComplexFlag.java
-java OverlyComplexFlag
-javac OverlyComplexFlag.java
-java OverlyComplexFlag
 cd ..
 git add .
 git commit -m .
@@ -574,4 +492,24 @@ java CaesarCipher
 java CaesarCipher
 java CaesarCipher
 java CaesarCipher
+cd ..
+git add .
+git commit -m .
+git push origin master
+cd CHAPTER1
+java OverlyComplexFlag
+cd CHAPTER1
+java CaesarCipher
+javac NestingLoops.java
+touch NestingLoops.java
+javac NestingLoops.java
+java NestingLoops
+javac NestingLoops.java
+java NestingLoops
+javac NestingLoops.java
+java NestingLoops
+javac NestingLoops.java
+java NestingLoops
+javac NestingLoops.java
+java NestingLoops
 cd ..
