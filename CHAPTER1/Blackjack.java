@@ -16,7 +16,7 @@ public class Blackjack
         int[] cardsInDeck = {4,4,4,4,4,4,4,4,4,4,4,4,4}; //it is possible to get four 2's, or 4 ace's, there are four cards of each type in a 52 card deck
         int[] storeItems = {0,0,0};
         int[] activatedItems = {0,0,0};
-        int[] storeCosts = {500, 500, 40};//joker card, plat, reverse
+        int[] storeCosts = {420, 500, 40};//joker card, plat, reverse
         String[] storeStrings = {"Lucky Joker Card ", "Platimum Chips ", "Uno Reverse Card "}, storeDescriptions = {"Play this card to increase your odds of getting 21! Cannot double down with it. ", "Platimum chips double the amount you earn, but not what you lose! One time purchase only! ", "Play this card to prevent you from losing currency! "};
         String cardString = "", answer = "", firstDealerCard = "";
         boolean stand = false, dealerStand = true, dealerRevealCard = false;//standing ends turn

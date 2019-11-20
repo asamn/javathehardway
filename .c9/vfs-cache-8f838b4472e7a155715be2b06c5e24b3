@@ -77,6 +77,8 @@ var crypto = require("crypto");
 var events = require("events");
 var exists = Fs.exists || Path.exists;
 
+var IS_OLD_SEQUELIZE = true;
+
 var localfsAPI; // Set on VFS register
 var DEFAULT_NL_CHAR_FILE = "\n";
 var DEFAULT_NL_CHAR_DOC = "";
@@ -181,6 +183,9 @@ function installServer(callback) {
             sqlite3Path = require.resolve(root + "sqlite3");
             require(sqlite3Path);
             Sequelize = require(root + "sequelize");
+
+            if (Sequelize.Deferrable) IS_OLD_SEQUELIZE = false;
+
             return;
         } catch (err) {
             return err;
@@ -436,25 +441,73 @@ function initDB(readonly, callback) {
     async.series(
         [
             function(next) {
+                if (IS_OLD_SEQUELIZE) return next();
+                sequelize
+                    .query("PRAGMA synchronous = 0;")
+                    .catch(next)
+                    .then(function() {
+                        next();
+                    });
+            },
+            function(next) {
+                if (IS_OLD_SEQUELIZE) return next();
+                sequelize
+                    .sync()
+                    .catch(next)
+                    .then(function() {
+                        next();
+                    });
+            },
+            function(next) {
+                if (IS_OLD_SEQUELIZE) return next();
+                Environment.findOrCreate({
+                    where: {id: 1},
+                    defaults: {
+                        authorPool: "{}",
+                        colorPool: "{}",
+                        basePath: basePath,
+                        migration: migrations.length,
+                    },
+                })
+                    .catch(function(err) {
+                        next(err);
+                    })
+                    .then(function(results) {
+                        var ws = results[0];
+                        ws.authorPoolParsed = parseJSONField(ws.authorPool);
+                        ws.colorPoolParsed = parseJSONField(ws.colorPool);
+                        cachedWS = ws;
+                        next();
+                    });
+            },
+            function(next) {
+                if (!IS_OLD_SEQUELIZE) return next();
                 // http://www.sqlite.org/pragma.html
                 wrapSeq(sequelize.query("PRAGMA synchronous = 0;"), next);
             },
             function(next) {
+                if (!IS_OLD_SEQUELIZE) return next();
                 wrapSeq(User.sync(), next);
             },
             function(next) {
+                if (!IS_OLD_SEQUELIZE) return next();
                 wrapSeq(Environment.sync(), next);
             },
             function(next) {
+                if (!IS_OLD_SEQUELIZE) return next();
                 wrapSeq(Document.sync(), next);
             },
             function(next) {
+                if (!IS_OLD_SEQUELIZE) return next();
                 wrapSeq(Revision.sync(), next);
             },
             function(next) {
+                if (!IS_OLD_SEQUELIZE) return next();
                 wrapSeq(ChatMessage.sync(), next);
             },
             function(next) {
+                if (!IS_OLD_SEQUELIZE) return next();
+
                 wrapSeq(
                     Environment.findOrCreate(
                         {id: 1},
@@ -953,9 +1006,38 @@ var Store = (function() {
      * @param {Function} callback
      */
     function newDocument(tmpl, callback) {
-        var contents = tmpl.contents || "";
-        var fsHash = tmpl.fsHash || hashString(contents);
-        wrapSeq(
+        if (IS_OLD_SEQUELIZE) {
+            var contents = tmpl.contents || "";
+            var fsHash = tmpl.fsHash || hashString(contents);
+            wrapSeq(
+                Document.create({
+                    contents: new Buffer(contents),
+                    path: tmpl.path,
+                    fsHash: fsHash,
+                    authAttribs: contents.length ? JSON.stringify([contents.length, null]) : "[]",
+                    starRevNums: "[]",
+                    newLineChar: tmpl.newLineChar || DEFAULT_NL_CHAR_DOC,
+                    revNum: 0,
+                }),
+                function(err, doc) {
+                    if (err) return callback(err);
+                    wrapSeq(
+                        Revision.create({
+                            document_id: doc.id,
+                            operation: new Buffer("[]"),
+                            revNum: 0,
+                        }),
+                        function(err, rev) {
+                            if (err) return callback(err);
+                            doc.revisions = parseRevisions([rev]);
+                            callback(null, parseDocument(doc));
+                        }
+                    );
+                }
+            );
+        } else {
+            var contents = tmpl.contents || "";
+            var fsHash = tmpl.fsHash || hashString(contents);
             Document.create({
                 contents: new Buffer(contents),
                 path: tmpl.path,
@@ -964,23 +1046,22 @@ var Store = (function() {
                 starRevNums: "[]",
                 newLineChar: tmpl.newLineChar || DEFAULT_NL_CHAR_DOC,
                 revNum: 0,
-            }),
-            function(err, doc) {
-                if (err) return callback(err);
-                wrapSeq(
+            })
+                .catch(callback)
+                .then(function(doc) {
                     Revision.create({
                         document_id: doc.id,
                         operation: new Buffer("[]"),
                         revNum: 0,
-                    }),
-                    function(err, rev) {
-                        if (err) return callback(err);
-                        doc.revisions = parseRevisions([rev]);
-                        callback(null, parseDocument(doc));
-                    }
-                );
-            }
-        );
+                    })
+                        .catch(callback)
+                        .then(function(rev) {
+                            doc.setRevisions([rev]).then(function(doc) {
+                                callback(null, parseDocument(doc));
+                            });
+                        });
+                });
+        }
     }
 
     /**
@@ -989,40 +1070,83 @@ var Store = (function() {
      * @param {Function} callback
      */
     function deleteDocument(path, callback) {
-        wrapSeq(
-            Document.find({
+        if (IS_OLD_SEQUELIZE) {
+            wrapSeq(
+                Document.find({
+                    where: {
+                        path: path,
+                    },
+                }),
+                function(err, doc) {
+                    if (err) return callback(err);
+                    wrapSeq(
+                        Document.destroy({
+                            path: path,
+                        }),
+                        function(err) {
+                            if (err) return callback(err);
+                            wrapSeq(
+                                Revision.destroy({
+                                    document_id: doc.id,
+                                }),
+                                function(err) {
+                                    if (err) return callback(err);
+                                }
+                            );
+                        }
+                    );
+                }
+            );
+        } else {
+            Document.findOne({
                 where: {
                     path: path,
                 },
-            }),
-            function(err, doc) {
-                if (err) return callback(err);
-                wrapSeq(
-                    Document.destroy({
-                        path: path,
-                    }),
-                    function(err) {
-                        if (err) return callback(err);
-                        wrapSeq(
+            })
+                .catch(callback)
+                .then(function(doc) {
+                    doc.destroy()
+                        .catch(callback)
+                        .then(function() {
                             Revision.destroy({
-                                document_id: doc.id,
-                            }),
-                            function(err) {
-                                if (err) return callback(err);
-                            }
-                        );
-                    }
-                );
-            }
-        );
+                                where: {
+                                    document_id: doc.id,
+                                },
+                            })
+                                .catch(callback)
+                                .then(function(doc) {
+                                    callback(null, doc);
+                                });
+                        });
+                });
+        }
     }
 
     function moveDocument(docId, newPath, callback) {
-        wrapSeq(Document.find({where: {path: docId}}), function(err, doc) {
-            if (err || !doc) return callback(err || new Error("No document found to rename!"));
-            doc.path = newPath;
-            wrapSeq(doc.save(), callback);
-        });
+        if (IS_OLD_SEQUELIZE) {
+            wrapSeq(Document.find({where: {path: docId}}), function(err, doc) {
+                if (err || !doc) return callback(err || new Error("No document found to rename!"));
+                doc.path = newPath;
+                wrapSeq(doc.save(), callback);
+            });
+        } else {
+            function error(err) {
+                callback(err || new Error("No document found to rename!"));
+            }
+
+            Document.findOne({where: {path: docId}})
+                .catch(error)
+                .then(function(doc) {
+                    if (!doc) return error();
+
+                    doc.path = newPath;
+                    doc.save()
+                        .catch(callback)
+                        .then(function(doc) {
+                            callback(null, doc);
+                        });
+                });
+        }
     }
 
     function parseDocument(doc) {
@@ -1058,7 +1182,17 @@ var Store = (function() {
             query.attributes = attributes; // ["id", other attributes]
         }
 
-        return wrapSeq(Document.find(query), parseDocumentCallback(callback));
+        if (IS_OLD_SEQUELIZE) {
+            return wrapSeq(Document.find(query), parseDocumentCallback(callback));
+        } else {
+            var done = parseDocumentCallback(callback);
+
+            Document.findOne(query)
+                .catch(done)
+                .then(function(doc) {
+                    done(null, doc);
+                });
+        }
     }
 
     /**
@@ -1067,10 +1201,18 @@ var Store = (function() {
      * @param {Function} callback
      */
     function getRevisions(doc, callback) {
-        wrapSeq(doc.getRevisions(), function(err, revisions) {
-            if (err) return callback(err);
-            callback(null, parseRevisions(revisions));
-        });
+        if (IS_OLD_SEQUELIZE) {
+            wrapSeq(doc.getRevisions(), function(err, revisions) {
+                if (err) return callback(err);
+                callback(null, parseRevisions(revisions));
+            });
+        } else {
+            doc.getRevisions()
+                .catch(callback)
+                .then(function(revisions) {
+                    callback(null, parseRevisions(revisions));
+                });
+        }
     }
 
     /**
@@ -1102,11 +1244,21 @@ var Store = (function() {
         doc.lastUpdate = doc.updated_at.getTime();
         logger.info("Saving document to db with lastUpdate: " + doc.lastUpdate);
 
-        return wrapSeq(doc.save(), function(err) {
-            doc.authAttribs = authAttribs;
-            doc.starRevNums = starRevNums;
-            callback(err, doc);
-        });
+        if (IS_OLD_SEQUELIZE) {
+            return wrapSeq(doc.save(), function(err) {
+                doc.authAttribs = authAttribs;
+                doc.starRevNums = starRevNums;
+                callback(err, doc);
+            });
+        } else {
+            doc.save()
+                .catch(callback)
+                .then(function(doc) {
+                    doc.authAttribs = authAttribs;
+                    doc.starRevNums = starRevNums;
+                    callback(null, doc);
+                });
+        }
     }
 
     /**
@@ -1116,13 +1268,29 @@ var Store = (function() {
     function getEnvironmentState(callback) {
         // the table has only a single entry
         if (cachedWS) return callback(null, cachedWS);
-        wrapSeq(Environment.find({where: {id: 1}}), function(err, ws) {
-            if (err || !ws) return callback(err || new Error("No environment state found!"));
-            ws.authorPoolParsed = parseJSONField(ws.authorPool);
-            ws.colorPoolParsed = parseJSONField(ws.colorPool);
-            cachedWS = ws;
-            callback(null, ws);
-        });
+
+        if (IS_OLD_SEQUELIZE) {
+            wrapSeq(Environment.find({where: {id: 1}}), function(err, ws) {
+                if (err || !ws) return callback(err || new Error("No environment state found!"));
+                ws.authorPoolParsed = parseJSONField(ws.authorPool);
+                ws.colorPoolParsed = parseJSONField(ws.colorPool);
+                cachedWS = ws;
+                callback(null, ws);
+            });
+        } else {
+            Environment.findOne({
+                where: {id: 1},
+            })
+                .catch(callback)
+                .then(function(ws) {
+                    if (!ws) return callback(new Error("No environment state found!"));
+
+                    ws.authorPoolParsed = parseJSONField(ws.authorPool);
+                    ws.colorPoolParsed = parseJSONField(ws.colorPool);
+                    cachedWS = ws;
+                    callback(null, ws);
+                });
+        }
     }
 
     /**
@@ -1135,16 +1303,31 @@ var Store = (function() {
         var colorPool = ws.colorPoolParsed;
         ws.authorPool = JSON.stringify(authorPool);
         ws.colorPool = JSON.stringify(colorPool);
-        return wrapSeq(ws.save(), function(err, savedWS) {
-            if (err) {
-                cachedWS = null;
-                return callback(err);
-            }
-            savedWS.authorPoolParsed = authorPool;
-            savedWS.colorPoolParsed = colorPool;
-            cachedWS = savedWS;
-            callback(null, savedWS);
-        });
+
+        if (IS_OLD_SEQUELIZE) {
+            return wrapSeq(ws.save(), function(err, savedWS) {
+                if (err) {
+                    cachedWS = null;
+                    return callback(err);
+                }
+                savedWS.authorPoolParsed = authorPool;
+                savedWS.colorPoolParsed = colorPool;
+                cachedWS = savedWS;
+                callback(null, savedWS);
+            });
+        } else {
+            ws.save()
+                .catch(function(err) {
+                    cachedWS = null;
+                    return callback(err);
+                })
+                .then(function(savedWS) {
+                    savedWS.authorPoolParsed = authorPool;
+                    savedWS.colorPoolParsed = colorPool;
+                    cachedWS = savedWS;
+                    callback(null, savedWS);
+                });
+        }
     }
 
     /**
@@ -1162,10 +1345,20 @@ var Store = (function() {
      */
     function getUsers(callback) {
         if (cachedUsers) return callback(null, cachedUsers);
-        wrapSeq(User.all(), function(err, users) {
-            cachedUsers = users;
-            callback(err, users);
-        });
+
+        if (IS_OLD_SEQUELIZE) {
+            wrapSeq(User.all(), function(err, users) {
+                cachedUsers = users;
+                callback(err, users);
+            });
+        } else {
+            User.findAll()
+                .catch(callback)
+                .then(function(results) {
+                    cachedUsers = results;
+                    callback(null, results);
+                });
+        }
     }
 
     /**
@@ -1175,14 +1368,26 @@ var Store = (function() {
      * @param {Function} callback
      */
     function saveChatMessage(text, user, callback) {
-        wrapSeq(
+        if (IS_OLD_SEQUELIZE) {
+            wrapSeq(
+                ChatMessage.create({
+                    text: text,
+                    userId: user.userId,
+                    name: user.name,
+                }),
+                callback
+            );
+        } else {
             ChatMessage.create({
                 text: text,
                 userId: user.userId,
                 name: user.name,
-            }),
-            callback
-        );
+            })
+                .catch(callback)
+                .then(function(message) {
+                    callback(null, message);
+                });
+        }
     }
 
     /**
@@ -1191,17 +1396,29 @@ var Store = (function() {
      * @param {Function} callback
      */
     function getChatMessages(userId, callback) {
-        wrapSeq(
+        if (IS_OLD_SEQUELIZE) {
+            wrapSeq(
+                ChatMessage.findAll({
+                    where: {
+                        userId: userId,
+                    },
+                }),
+                function(err, messages) {
+                    if (err) return callback(err);
+                    callback(null, messages);
+                }
+            );
+        } else {
             ChatMessage.findAll({
                 where: {
                     userId: userId,
                 },
-            }),
-            function(err, messages) {
-                if (err) return callback(err);
-                callback(null, messages);
-            }
-        );
+            })
+                .catch(callback)
+                .then(function(messages) {
+                    callback(null, messages);
+                });
+        }
     }
 
     /**
@@ -1211,16 +1428,29 @@ var Store = (function() {
      */
     function recentChatHistory(limit, callback) {
         limit = limit || 100;
-        wrapSeq(
+
+        if (IS_OLD_SEQUELIZE) {
+            wrapSeq(
+                ChatMessage.findAll({
+                    order: "timestamp DESC",
+                    limit: limit,
+                }),
+                function(err, history) {
+                    if (err) return callback(err);
+                    callback(null, history.reverse());
+                }
+            );
+        } else {
             ChatMessage.findAll({
                 order: "timestamp DESC",
                 limit: limit,
-            }),
-            function(err, history) {
-                if (err) return callback(err);
-                callback(null, history.reverse());
-            }
-        );
+            })
+                .catch(callback)
+                .then(function(history) {
+                    if (!history) return callback(null, []);
+                    callback(null, history.reverse());
+                });
+        }
     }
 
     return {
@@ -1263,6 +1493,7 @@ var lastSaveStarts = Object.create(null);
 //
 //     { <key or document_id> : [{Function}] }
 var locks = Object.create(null);
+
 function lock(key, callback) {
     if (!locks[key]) {
         locks[key] = [];
@@ -1360,31 +1591,65 @@ function handleConnect(userIds, client) {
     function syncUserInfo() {
         var name = userIds.name;
 
-        wrapSeq(User.find({where: {userId: userId}}), function(err, user) {
-            if (err) return done("syncUserInfo " + String(err));
+        if (IS_OLD_SEQUELIZE) {
+            wrapSeq(User.find({where: {userId: userId}}), function(err, user) {
+                if (err) return done("syncUserInfo " + String(err));
 
-            if (!user) {
-                return wrapSeq(
-                    User.create({
-                        userId: userId,
-                        name: name,
-                    }),
-                    function(err, createdUser) {
-                        if (err) return done("Failed creating user " + String(err));
-                        cachedUsers && cachedUsers.push(createdUser);
-                        augmentEnvironmentInfo();
-                    }
-                );
-            }
+                if (!user) {
+                    return wrapSeq(
+                        User.create({
+                            userId: userId,
+                            name: name,
+                        }),
+                        function(err, createdUser) {
+                            if (err) return done("Failed creating user " + String(err));
+                            cachedUsers && cachedUsers.push(createdUser);
+                            augmentEnvironmentInfo();
+                        }
+                    );
+                }
 
-            if (user.name === name) return augmentEnvironmentInfo();
+                if (user.name === name) return augmentEnvironmentInfo();
 
-            user.name = name;
-            wrapSeq(user.save(), function(err, user) {
-                if (err) return done("Failed updating user " + String(err));
-                augmentEnvironmentInfo();
+                user.name = name;
+                wrapSeq(user.save(), function(err, user) {
+                    if (err) return done("Failed updating user " + String(err));
+                    augmentEnvironmentInfo();
+                });
             });
-        });
+        } else {
+            User.findOne({where: {userId: userId}})
+                .catch(function(err) {
+                    return done("syncUserInfo " + String(err));
+                })
+                .then(function(user) {
+                    if (!user) {
+                        return wrapSeq(
+                            User.create({
+                                userId: userId,
+                                name: name,
+                            }),
+                            function(err, createdUser) {
+                                if (err) return done("Failed creating user " + String(err));
+                                cachedUsers && cachedUsers.push(createdUser);
+                                augmentEnvironmentInfo();
+                            }
+                        );
+                    }
+
+                    if (user.name === name) return augmentEnvironmentInfo();
+
+                    user.name = name;
+
+                    user.save()
+                        .catch(function(err) {
+                            done("Failed updating user " + String(err));
+                        })
+                        .then(function(user) {
+                            augmentEnvironmentInfo();
+                        });
+                });
+        }
     }
 
     function augmentEnvironmentInfo() {
@@ -1523,20 +1788,34 @@ function applyOperation(userIds, docId, doc, op, callback) {
             doc.contents = applyContents(op, doc.contents);
             applyAuthorAttributes(doc.authAttribs || [], op, ws.authorPoolParsed[userId]);
 
-            wrapSeq(
+            if (IS_OLD_SEQUELIZE) {
+                wrapSeq(
+                    Revision.create({
+                        operation: new Buffer(JSON.stringify(op)),
+                        author: userId,
+                        revNum: doc.revNum + 1,
+                        document_id: doc.id,
+                    }),
+                    next
+                );
+            } else {
                 Revision.create({
                     operation: new Buffer(JSON.stringify(op)),
                     author: userId,
                     revNum: doc.revNum + 1,
                     document_id: doc.id,
-                }),
-                next
-            );
+                })
+                    .catch(next)
+                    .then(function(rev) {
+                        next(null, rev);
+                    });
+            }
         } catch (e) {
             return next(e);
         }
     });
-    function next(err) {
+
+    function next(err, rev) {
         if (err) return callback(err);
         if (userId == 0) {
             detectCodeRevertError(op, doc.revNum, doc);
@@ -1562,30 +1841,59 @@ function applyOperation(userIds, docId, doc, op, callback) {
         Store.saveDocument(doc, function(err) {
             if (err) return callback(err);
 
-            logger.info(
-                "applyOperation successfully saved User " +
-                    userId +
-                    " client " +
-                    userIds.clientId +
-                    " doc " +
-                    docId +
-                    " revNum " +
-                    doc.revNum +
-                    " fsHash " +
-                    doc.fsHash +
-                    " contentsHash " +
-                    contentsHash +
-                    " time: " +
-                    Date.now()
-            );
-            var msg = {
-                docId: docId,
-                clientId: userIds.clientId,
-                userId: userId,
-                revNum: doc.revNum,
-                op: op,
-            };
-            callback(null, msg);
+            if (IS_OLD_SEQUELIZE) {
+                logger.info(
+                    "applyOperation successfully saved User " +
+                        userId +
+                        " client " +
+                        userIds.clientId +
+                        " doc " +
+                        docId +
+                        " revNum " +
+                        doc.revNum +
+                        " fsHash " +
+                        doc.fsHash +
+                        " contentsHash " +
+                        contentsHash +
+                        " time: " +
+                        Date.now()
+                );
+                var msg = {
+                    docId: docId,
+                    clientId: userIds.clientId,
+                    userId: userId,
+                    revNum: doc.revNum,
+                    op: op,
+                };
+                callback(null, msg);
+            } else {
+                doc.addRevisions([rev]).then(function(doc) {
+                    logger.info(
+                        "applyOperation successfully saved User " +
+                            userId +
+                            " client " +
+                            userIds.clientId +
+                            " doc " +
+                            docId +
+                            " revNum " +
+                            doc.revNum +
+                            " fsHash " +
+                            doc.fsHash +
+                            " contentsHash " +
+                            contentsHash +
+                            " time: " +
+                            Date.now()
+                    );
+                    var msg = {
+                        docId: docId,
+                        clientId: userIds.clientId,
+                        userId: userId,
+                        revNum: doc.revNum,
+                        op: op,
+                    };
+                    callback(null, msg);
+                });
+            }
         });
     }
 }
@@ -1681,6 +1989,7 @@ function handleEditUpdate(userIds, client, data) {
             " revision " +
             newRev
     );
+
     function done(err) {
         unlock(docId);
         if (err) {
