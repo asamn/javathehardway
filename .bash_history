@@ -528,3 +528,6 @@ java LowestTemperature
 touch MailingAddresses
 touch MailingAddresses.java
 cd ..
+git add .
+git commit -m .
+git push origin master
