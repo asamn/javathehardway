@@ -1,51 +1,3 @@
-javac NestingLoops.java
-touch NestingLoops.java
-javac NestingLoops.java
-java NestingLoops
-javac NestingLoops.java
-java NestingLoops
-javac NestingLoops.java
-java NestingLoops
-javac NestingLoops.java
-java NestingLoops
-javac NestingLoops.java
-java NestingLoops
-cd ..
-git add .
-git commit -m .
-git push origin master
-cd CHAPTER1
-touch FarmerBrown.java
-javac FarmerBrown.java
-javac FarmerBrown.java
-javac FarmerBrown.java
-javac FarmerBrown.java
-javac FarmerBrown.java
-javac FarmerBrown.java
-java FarmerBrown
-javac FarmerBrown.java
-java FarmerBrown
-javac FarmerBrown.java
-java FarmerBrown
-javac FarmerBrown.java
-java FarmerBrown
-java FarmerBrown
-javac FarmerBrown.java
-java FarmerBrown
-javac FarmerBrown.java
-javac ArrayInto.java
-touch ArrayInto.java
-javac ArrayIntro.java
-javac ArrayIntro.java
-javac ArrayIntro.java
-java ArrayIntro
-javac ArrayIntro.java
-javac ArrayIntro.java
-javac ArrayIntro.java
-java ArrayIntro
-javac ArrayIntro.java
-javac ArrayIntro.java
-java ArrayIntro
 javac ArrayIntro.java
 java ArrayIntro
 javac ArrayIntro.java
@@ -531,3 +483,20 @@ cd ..
 git add .
 git commit -m .
 git push origin master
+git add .
+git push origin master
+git commit -m .
+git push origin master
+javac MailingAddresses.java
+cd CHAPTER1
+javac MailingAddresses.java
+java MailingAddresses
+java MailingAddresses
+javac MailingAddresses.java
+java MailingAddresses
+javac MailingAddresses.java
+javac MailingAddresses.java
+javac MailingAddresses.java
+java MailingAddresses
+cd CHAPTER1
+cd ..
