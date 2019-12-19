@@ -1,0 +1,149 @@
+12
+0
+PARLOR
+This is the parlor.
+It's a beautiful room.
+
+There looks to be a kitchen to the "north."
+To the "south" there is a long hallway.
+And there's a shadowy corridor to the "east."
+%%
+go north:1
+north:1
+go east:2
+east:2
+go south:6
+south:6
+%%
+1
+KITCHEN
+There is a long countertop with dirty dishes everywhere. Off to one side
+there is, as you'd expect, a refrigerator. You may open the "refrigerator"
+or "go back."
+%%
+fridge:3
+refrigerator:3
+open:3
+open fridge:3
+go back:0
+back:0
+@@
+5:GOLD:0:You find some loose change on the countertop.
+%%
+2
+CORRIDOR
+The corridor has led to a dark room. The moment you step inside, the door
+slams shut behind you. There is no handle on the interior of the door.
+
+There is no escaping... you are likely to be eaten by a grue.
+%%
+quit:-1
+@@
+-999:HP:1:You suffocate to death!
+%%
+3
+REFRIGERATOR
+Inside the refrigerator you see food and stuff. It looks pretty nasty. There are two bottles of iced tea.
+You can "eat" some of the food, "take" a portion of the food, or go "back."
+%%
+eat:4
+eat food:4
+back:1
+go back:1
+--
+Rotten Food:1:4
+Iced Tea:2:5
+%%
+4
+EATFOOD
+The food is slimy and foul, but you manage to choke it down. Your stomach
+starts jumping like a frog in hot water. You feel faint. Sliding to the
+floor, the darkness closes in.
+%%
+quit:-1
+@@
+-999:HP:1:NULL
+%%
+5
+DRINKTEA
+You chug the iced tea! You imagine hearing your friends
+gathered around you chanting "CHUG! CHUG! CHUG! CHUG! CHUG!"
+%%
+AUTO:999
+@@
+-9:HP:1:Unfortunately, your system cannot handle the sweetness of the iced tea, and you pass out.
+%%
+6
+HALLWAY
+The carpeted hallway leads to an intersection.
+Which direction will you go? "Left," "right," or "go back" to the parlor?
+%%
+go back:0
+back:0
+right:8
+go right:8
+left:7
+go left:7
+%%
+7
+LEFT
+You come across a dead end. There is an end table in front of you with a vase of flowers.
+While you admire the beauty of the flowers, you hear some unattractive breathing behind you.
+You have no choice but to turn around.
+%%
+AUTO:8
+@@
+10:HP:1:The aroma of the flowers heals you!
+%%
+8
+RIGHT
+Your face comes into contact with the hot heavy breath of the monstrosity in front of you. The horrible stench holds your nostrils hostage.
+In front of you stands an anomaly of vast proportions. It can only be described as a crossbreed between a Snorlax and Amy Schumer.
+Several folds and blubberly extrusions render this Lovecraftian creature as a living wall of flesh.
+"FEED ME!!!" it croaks in a deep masculine voice. The entire hallway violently shakes from the 140 decibel screech.
+
+You feel that if you had some food in your "inventory," you could try to "use" it to feed what is in front of you.
+You should "go back" to see if you can find some food. The creature seems tame for now. You wonder what would happen if you "pet" it?
+%%
+go back:6
+back:6
+pet:9
+pet creature:9
+pet beast:9
+pet it:9
+@@
+-5:HP:1:A piece of the ceiling falls and bonks you in the head.
+UU
+Rotten Food:10
+Iced Tea:11
+%%
+9
+PETBEAST
+You run your hand across the slippery skin in a friendly manner. It feels like water balloons ready to burst. The creature does not seem to
+like this, and two slimy hands extrude from the folds of this creature. It grabs ahold of you and easily pierces a hole in your chest cavity.
+It rips out some of your internal organs.
+%%
+AUTO:6
+@@
+-50:HP:1:It's just a flesh wound,
+%%
+10
+FEEDBEASTROTTENFOOD
+You take aim and toss the rotten food into the beast's mouth. The beast gobbles it up without chewing it. A brief moment of silence- then the
+beast yells in your face, "IT'S F***ING RAW!!!" The beast glows into an aggressive shade of red before momentarily combusting into a billion
+tiny pieces. Blood paints the hallway about the same shade of red as seen before, except a bit more red. Behind what was once a great beast
+is the reward you long for... a door out of this wretched place! Covered in blood, you make your way out to freedom.
+YOU WIN!
+%%
+AUTO:-2
+%%
+11
+FEEDBEASTTEA
+You find a ladder and pour the iced tea into the beast's mouth. It swells up like an overinflated tire. POP! Blood and flesh and guts cover the
+the entire hallway. Behind what was once a great beast is the reward you long for... a door out of this wretched place! Covered in blood, you
+make your way out to freedom. YOU WIN!
+%%
+AUTO:-2
+%%
+
+

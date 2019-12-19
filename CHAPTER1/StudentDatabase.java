@@ -92,7 +92,6 @@ public class StudentDatabase
     }
 
 
-
     public static Student[] orderGPA (Student[] tempArray, Student[] orderedArray)
     {
 
@@ -186,9 +185,6 @@ public class StudentDatabase
     }
 
 
-
-
-
     public static Student[] resetTemp(Student[] tempArray, Student[] studentArray)
     {
         for (int i = 0; i < studentArray.length; i++) //reset tempArray back to default
@@ -200,20 +196,6 @@ public class StudentDatabase
 
         return tempArray;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 

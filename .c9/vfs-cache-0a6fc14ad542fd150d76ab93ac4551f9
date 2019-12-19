@@ -3907,11 +3907,19 @@ diff_match_patch.prototype.diff_compute_ = function(a, b, c, d) {
         g = e.indexOf(f);
     if (-1 != g)
         return (
-            (c = [[1, e.substring(0, g)], [0, f], [1, e.substring(g + f.length)]]),
+            (c = [
+                [1, e.substring(0, g)],
+                [0, f],
+                [1, e.substring(g + f.length)],
+            ]),
             a.length > b.length && (c[0][0] = c[2][0] = -1),
             c
         );
-    if (1 == f.length) return [[-1, a], [1, b]];
+    if (1 == f.length)
+        return [
+            [-1, a],
+            [1, b],
+        ];
     return (e = this.diff_halfMatch_(a, b))
         ? ((f = e[0]),
           (a = e[1]),
@@ -4010,7 +4018,10 @@ diff_match_patch.prototype.diff_bisect_ = function(a, b, c) {
                 return this.diff_bisectSplit_(a, b, m, r, c);
         }
     }
-    return [[-1, a], [1, b]];
+    return [
+        [-1, a],
+        [1, b],
+    ];
 };
 diff_match_patch.prototype.diff_bisectSplit_ = function(a, b, c, d, e) {
     var f = a.substring(0, c),
